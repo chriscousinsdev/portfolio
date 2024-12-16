@@ -29,14 +29,29 @@ export default {
         rotateback180: {
           '0%': { transform: 'rotate(180deg)' },
 					'100%': { transform: 'rotate(0deg)' },
-        }
+        },
+        flyInUp: {
+          '0%': { opacity: '0', transform: 'translateY(200px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        flyInDown: {
+          '0%': { opacity: '0', transform: 'translateY(-200px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
       },
       animation: {
         blink: 'blink 0.9s steps(1, end) infinite',
         'rotate-180': 'rotate180 0.5s ease-in-out forwards',
-        'rotate-back-180': 'rotateback180 0.5s ease-in-out forwards'
+        'rotate-back-180': 'rotateback180 0.5s ease-in-out forwards',
+        flyInUp: 'flyInUp 0.6s forwards',
+        flyInDown: 'flyInDown 0.6s forwards',
       },
     }
+  },
+  variants: {
+    extend: {
+      animation: ['responsive'],
+    },
   },
 
   plugins: []

@@ -2,7 +2,7 @@
 	let { name, logo }: { name: string, logo: string } = $props();
 </script>
 
-<div class="flex">
+<div class="flex space-x-1">
     <img 
     alt="a down arrow" src={logo} 
     class={`aspect-auto h-6 w-auto text-sm`} 

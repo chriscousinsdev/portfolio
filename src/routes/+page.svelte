@@ -9,17 +9,29 @@
     import email from '$lib/assets/mail.png'
     import github from '$lib/assets/github.png'
     import cv from '$lib/assets/cv.png'
+    
+    import { page } from '$app/stores';
+	import { afterNavigate } from '$app/navigation';
 
     let sectionContainer: HTMLDivElement;
+    let linksContainer: HTMLDivElement;
     let sections: NodeListOf<HTMLElement>;
-    let currentSection = 0;
-    let rotation = 0;
+    let currentSection = $page.state.links ? 2 : 0;
+    let rotation = $page.state.links ? 180 : 0;
     let isScrolling = false;
 
     onMount(() => {
         sections = sectionContainer.querySelectorAll("section");
         window.addEventListener("wheel", handleWheel, { passive: false })
         typeWords()
+    })
+    
+    afterNavigate(() => {
+        if ($page.state.links) {
+            linksContainer.scrollIntoView({ behavior: 'smooth' });
+            rotation = 180;
+            currentSection = 2;
+        }
     })
 
     const handleArrowForwardClick = () => {
@@ -34,7 +46,6 @@
     const handleWheel = (event: WheelEvent) => {
         event.preventDefault();
         if (isScrolling) return;
-        isScrolling = true;
         
         if (event.deltaY > 0) {
             if (currentSection < sections.length - 1) currentSection++;
@@ -42,7 +53,7 @@
             if (currentSection > 0) currentSection--;
         }
         rotation = currentSection === 2 ? 180 : 0;
-        
+        isScrolling = true;
         scrollToSection()
     }
 
@@ -60,7 +71,7 @@
 
         setTimeout(() => {
             isScrolling = false;
-        }, 300)
+        }, 500)
     }
 
     const words = ["developer", "student", "tutor"]
@@ -155,7 +166,7 @@
                 <h4><a href="mailto:chriscousinsdev@gmail.com" target="_blank">cv (on request)</a></h4>
             </div>
         </div>
-        <div class="flex flex-col justify-center space-y-2 -mt-3">
+        <div class="flex flex-col justify-center space-y-2 -mt-3" id="links" bind:this={linksContainer}>
             <h3>my links</h3>
             <h5>feel free to reach out</h5>
         </div>
