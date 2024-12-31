@@ -14,8 +14,8 @@
     {#each footerItems as footerItem}
     <div class="flex items-center space-x-1">
         <img 
-        alt={`${footerItem.name} logo`} src={footerItem.logo} 
-        class={`aspect-auto h-4 w-auto`} 
+            alt={`${footerItem.name} logo`} src={footerItem.logo} 
+            class={`aspect-auto h-4 w-auto`} 
         />
         <span class="font-bold text-sm">{footerItem.name}</span>
     </div>

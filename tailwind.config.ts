@@ -7,7 +7,6 @@ export default {
     extend: {
       backgroundImage: {
         'tv': 'radial-gradient(circle, #B67360 40%, #E1CEAE 100%)',
-        'books': ''
       },
       colors: {
         offblack: "#0D0D0D",

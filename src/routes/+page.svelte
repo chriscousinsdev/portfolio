@@ -1,3 +1,7 @@
+<svelte:head>
+    <title>chriscousinsdev</title> 
+</svelte:head>
+
 <script lang="ts">
     import computer from '$lib/assets/computer.png'
     import bio from '$lib/assets/bio.png'
@@ -13,6 +17,12 @@
     import { page } from '$app/stores';
 	import { afterNavigate } from '$app/navigation';
 
+    const words = ["developer", "student", "tutor"]
+    const TYPING_SPEED = 110;
+    const DELETING_SPEED = 50;
+    const FINISHED_DELAY = 4000;
+    const START_DELAY = 300;
+
     let sectionContainer: HTMLDivElement;
     let linksContainer: HTMLDivElement;
     let sections: NodeListOf<HTMLElement>;
@@ -27,6 +37,7 @@
     })
     
     afterNavigate(() => {
+        // check links state and scroll to section if true
         if ($page.state.links) {
             linksContainer.scrollIntoView({ behavior: 'smooth' });
             rotation = 180;
@@ -37,8 +48,8 @@
     const handleArrowForwardClick = () => {
         if (isScrolling) return;
         isScrolling = true;
-        if (currentSection !== 2) currentSection++
-        else currentSection = 0
+        //update visible section and arrow direction
+        currentSection !== 2 ? currentSection++ : currentSection = 0
         rotation = currentSection === 2 ? 180 : 0;
         scrollToSection()
     }
@@ -46,14 +57,17 @@
     const handleWheel = (event: WheelEvent) => {
         event.preventDefault();
         if (isScrolling) return;
+        isScrolling = true;
         
         if (event.deltaY > 0) {
+            //scrolling down
             if (currentSection < sections.length - 1) currentSection++;
         } else {
+            //scrolling up
             if (currentSection > 0) currentSection--;
         }
+
         rotation = currentSection === 2 ? 180 : 0;
-        isScrolling = true;
         scrollToSection()
     }
 
@@ -64,24 +78,19 @@
         let offset = 0;
         if (currentSection === 0) offset = 88
 
+        //scroll to the relevant section using navbar offset
         const rect = selectedSection.getBoundingClientRect();
         const scrollPosition = window.scrollY + rect.top - offset;
 
         window.scrollTo({ top: scrollPosition, behavior: "smooth" });
 
+        //debounce multiple scrolls
         setTimeout(() => {
             isScrolling = false;
         }, 500)
     }
 
-    const words = ["developer", "student", "tutor"]
     let typedText: HTMLHeadingElement;
-
-    const TYPING_SPEED = 110;
-    const DELETING_SPEED = 50;
-    const FINISHED_DELAY = 4000;
-    const START_DELAY = 300;
-
     let wordIndex = 0;
     let charIndex = 0;
     let isDeleting = false;
@@ -124,8 +133,9 @@
 
 <div class="flex flex-col min-h-screen z-0 scroll-smooth scrollbar-hidden relative" bind:this={sectionContainer}>
     <MovePageArrow currentSection={currentSection} onClickHandler={handleArrowForwardClick} rotation={rotation}/>
+    <!-- first section, fullpage, landing -->
     <section class="h-screen flex justify-center items-center translate-y-[-88px] space-x-8 relative z-0 pointer-events-none">
-        <div class="bg-tv aspect-square w-72 blur-[100px] absolute top-1/2 left-1/4 -translate-x-1/2 -translate-y-1/2"></div>
+        <div class="bg-tv aspect-square w-72 blur-[100px] absolute top-1/2 left-1/4 -translate-x-1/2 -translate-y-1/2 -mt-6 ml-6"></div>
         <img alt="a large computer" src={computer} class="w-[575px] relative z-10"/>
         <div class="flex flex-col space-y-4 mt-[-24px]">
             <h1>chriscousinsdev</h1>
@@ -135,6 +145,7 @@
             </div>
         </div>
     </section>
+    <!-- second section, fullpage, about me and my work subsections -->
     <section class="grid grid-cols-[1.1fr_1fr] grid-rows-2 h-screen pb-10 pt-10">
         <div class="flex items-center justify-end">
             <img alt="a block of code" src={bio} class="w-[700px]"/>
@@ -151,6 +162,7 @@
             <h5>current and past projects</h5>
         </div>
     </section>
+    <!-- third section, halfpage, links subsection -->
     <section class="grid grid-cols-[1.1fr_1fr] h-[50vh]">
         <div class="grid grid-cols-[1.3fr_1fr] gap-6 gap-y-40 items-center">
             <div class="flex flex-col space-y-4 items-end">

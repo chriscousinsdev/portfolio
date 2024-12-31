@@ -1,6 +1,9 @@
 <script lang="ts">
+    import { onMount } from "svelte";
     import TechnologyBanner from "$lib/components/TechnologyBanner.svelte";
-
+	import Footer from "$lib/components/Footer.svelte";
+    
+    // technology icons
     import mongodb from '$lib/assets/technologies/mongodb.png'
     import typescript from '$lib/assets/technologies/typescript.png'
     import nextjs from '$lib/assets/technologies/nextjs.png'
@@ -10,21 +13,19 @@
     import unity from '$lib/assets/technologies/unity.png'
     import blender from '$lib/assets/technologies/blender.png'
     import python from '$lib/assets/technologies/python.png'
-
+    
+    // project icons
     import watchdog from '$lib/assets/projects/watchdog.png'
     import damageinc from '$lib/assets/projects/damageinc.png'
     import discord_large from '$lib/assets/projects/discord.png'
-
-	import { onMount } from "svelte";
-	import Footer from "$lib/components/Footer.svelte";
  
     let currentProject = $state(0);
 	let isScrolling = false;
     let direction: 1 | -1 = $state(-1);
 
 	const projects = [
-        { title: "watchdog", year: "2024-", image: { path: watchdog, size: 150, left: -50 } },
-        { title: "damageinc", year: "2024-", image: { path: damageinc, size: 100, left: -100 } },
+        { title: "watchdog", year: "2024-", image: { path: watchdog, size: 150, left: -50 }, link: "https://watchdog.gg" },
+        { title: "damageinc", year: "2024-", image: { path: damageinc, size: 100, left: -100 }, link: "https://dmginc.gg" },
         { title: "researchpaper", year: "2024", image: { path: discord_large, size: 60, left: -65 } },
         { title: "discord", year: "2022-", image: { path: discord_large, size: 60, left: -65 } },
     ];
@@ -87,12 +88,14 @@
                         {project.year}
                     </div>
                     <div class={`flex items-center w-full ${i === currentProject ? '' : i === currentProject + 1 ? 'opacity-80' : 'opacity-30'}`}>
-                        <img 
-                            alt={`${project.title} logo`}
-                            src={project.image.path} 
-                            class="transition-transform duration-500"
-                            style="transform: scale({i === currentProject ? 1.5 : 1}) translateX({i === currentProject ? '10px' : `${project.image.left}px`}); height: {project.image.size}px; " 
-                        />
+                        <a href={project?.link ?? ''} target="_blank">
+                            <img 
+                                alt={`${project.title} logo`}
+                                src={project.image.path} 
+                                class="transition-transform duration-500"
+                                style="transform: scale({i === currentProject ? 1.5 : 1}) translateX({i === currentProject ? '10px' : `${project.image.left}px`}); height: {project.image.size}px; " 
+                            />
+                        </a>
                     </div>
                 </div>
                 {/each}
