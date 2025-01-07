@@ -1,5 +1,5 @@
 <script lang="ts">
-    import arrow_forward from '$lib/assets/arrow_forward.png'
+    const arrow_forward = '/assets/arrow_forward.png'
 
 	let { onClickHandler, rotation, offset = 12, label }: { onClickHandler: () => void, rotation: number, offset?: number, label?: string } = $props();
 </script>

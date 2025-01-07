@@ -3,19 +3,18 @@
 </svelte:head>
 
 <script lang="ts">
-    import computer from '$lib/assets/computer.png'
-    import bio from '$lib/assets/bio.png'
-    import books from '$lib/assets/books.png'
 	import { onMount } from 'svelte';
     import MovePageArrow from '$lib/components/MovePageArrow.svelte';
-
-    import linkedin from '$lib/assets/linkedin.png'
-    import email from '$lib/assets/mail.png'
-    import github from '$lib/assets/github.png'
-    import cv from '$lib/assets/cv.png'
-    
     import { page } from '$app/stores';
 	import { afterNavigate } from '$app/navigation';
+
+    const computer = '/assets/computer.png'
+    const bio = '/assets/bio.png'
+    const books = '/assets/books.png'
+    const linkedin = '/assets/linkedin.png'
+    const email = '/assets/mail.png'
+    const github = '/assets/github.png'
+    const cv = '/assets/cv.png'
 
     const words = ["developer", "student", "tutor"]
     const TYPING_SPEED = 110;
@@ -183,19 +182,21 @@
             <h5>current and past projects</h5>
         </div>
         <div class="order-3 lg:order-2 flex items-center justify-center lg:justify-start">
-            <img alt="a stack of books" src={books} class="w-[200px] lg:w-[300px]"/>
+            <a href="work">
+                <img alt="a stack of books" src={books} class="w-[200px] lg:w-[300px]"/>
+            </a>
         </div>
     </section>
     <!-- third section, halfpage, links subsection -->
     <section class="grid grid-cols-1 grid-rows-[0.4fr_1fr] lg:grid-rows-1 lg:grid-cols-[0.9fr_1.1fr] h-[50svh] lg:h-[50vh]">
         <div class="grid grid-cols-[0.3fr_0.4fr] lg:grid-cols-[0.2fr_1fr] gap-6 gap-y-40 items-center order-1 lg:order-0 -mt-10">
-            <div class="flex flex-col space-y-4 items-end">
+            <div class="flex flex-col space-y-4 items-end lg:h-[192px] lg:justify-between lg:py-1">
                 <img alt="linkedin icon" src={linkedin} class="h-7 aspect-square"/>
                 <img alt="mail icon" src={email} class="h-7 aspect-square"/>
                 <img alt="github icon" src={github} class="h-7 aspect-square"/>
                 <img alt="cv icon" src={cv} class="h-7 aspect-square"/>
             </div>
-            <div class="flex flex-col space-y-4 order-0 lg:order-1">
+            <div class="flex flex-col space-y-4 order-0 lg:order-1 lg:h-[192px]">
                 <h4><a href="https://www.linkedin.com/in/chriscousinsdev/" target="_blank">linkedin</a></h4>
                 <h4><a href="mailto:chriscousinsdev@gmail.com" target="_blank">email</a></h4>
                 <h4><a href="https://github.com/chriscousinsdev" target="_blank">github</a></h4>

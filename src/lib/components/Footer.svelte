@@ -1,7 +1,7 @@
 <script lang="ts">
-    import linkedin from '$lib/assets/linkedin.png'
-    import email from '$lib/assets/mail.png'
-    import github from '$lib/assets/github.png'
+    const linkedin = '/assets/linkedin.png'
+    const email = '/assets/mail.png'
+    const github = '/assets/github.png'
 
     const footerItems = [
         { name: "linkedin", logo: linkedin, link: "https://www.linkedin.com/in/chriscousinsdev/" },

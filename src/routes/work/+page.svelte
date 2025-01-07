@@ -4,23 +4,22 @@
 	import Footer from "$lib/components/Footer.svelte";
 	import MovePageArrow from "$lib/components/MovePageArrow.svelte";
 
-
     // technology icons
-    import mongodb from '$lib/assets/technologies/mongodb.png'
-    import typescript from '$lib/assets/technologies/typescript.png'
-    import nextjs from '$lib/assets/technologies/nextjs.png'
-    import discord from '$lib/assets/technologies/discord.png'
-    import mysql from '$lib/assets/technologies/mysql.png'
-    import csharp from '$lib/assets/technologies/csharp.png'
-    import unity from '$lib/assets/technologies/unity.png'
-    import blender from '$lib/assets/technologies/blender.png'
-    import python from '$lib/assets/technologies/python.png'
+    const mongodb = '/assets/technologies/mongodb.png'
+    const typescript = '/assets/technologies/typescript.png'
+    const nextjs = '/assets/technologies/nextjs.png'
+    const discord = '/assets/technologies/discord.png'
+    const mysql = '/assets/technologies/mysql.png'
+    const csharp = '/assets/technologies/csharp.png'
+    const unity = '/assets/technologies/unity.png'
+    const blender = '/assets/technologies/blender.png'
+    const python = '/assets/technologies/python.png'
 	
 	// project icons
-	import watchdog from '$lib/assets/projects/watchdog.png';
-	import damageinc from '$lib/assets/projects/damageinc.png';
-	import discord_large from '$lib/assets/projects/discord.png';
-    import research_paper from '$lib/assets/projects/researchpaper.png'
+	const watchdog = '/assets/projects/watchdog.png';
+	const damageinc = '/assets/projects/damageinc.png';
+	const discord_large = '/assets/projects/discord.png';
+    const research_paper = '/assets/projects/researchpaper.png'
 
 	let currentProject = 0;
 	let isScrolling = false;
