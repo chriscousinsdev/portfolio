@@ -5,3 +5,5 @@
 [![TailwindCSS](https://img.shields.io/badge/Tailwind%20CSS-%2338B2AC.svg?logo=tailwind-css&logoColor=white)](#)
 
 A very basic svelte application designed to be entirely client-side with some custom scrolling animations, implemented using tailwindcss, which aim to improve overall user experience
+
+_A small clarifiation: I am not a frontend engineer, the css might be a bit rough_

@@ -29,10 +29,13 @@
     let currentSection = $page.state.links ? 2 : 0;
     let rotation = $page.state.links ? 180 : 0;
     let isScrolling = false;
+    let startPointerY = 0;
 
     onMount(() => {
         sections = sectionContainer.querySelectorAll("section");
         window.addEventListener("wheel", handleWheel, { passive: false })
+        window.addEventListener("pointermove", handlePointerMove, { passive: false })
+        window.addEventListener("pointerdown", handlePointerDown, { passive: false })
         typeWords()
     })
     
@@ -67,6 +70,27 @@
             if (currentSection > 0) currentSection--;
         }
 
+        rotation = currentSection === 2 ? 180 : 0;
+        scrollToSection()
+    } 
+
+    const handlePointerDown = (event: PointerEvent) => {
+        if (event.pointerType !== 'touch') return;
+        startPointerY = event.clientY;
+    }
+    
+    const handlePointerMove = (event: PointerEvent) => {
+        event.preventDefault();
+        if (isScrolling || event.pointerType !== 'touch') return;
+        isScrolling = true;
+        const deltaY = event.clientY - startPointerY
+        if (deltaY < 0) {
+            //scrolling down
+            if (currentSection < sections.length - 1) currentSection++;
+        } else {
+            //scrolling up
+            if (currentSection > 0) currentSection--;
+        }
         rotation = currentSection === 2 ? 180 : 0;
         scrollToSection()
     }
@@ -131,54 +155,54 @@
     }
 </script>
 
-<div class="flex flex-col min-h-screen z-0 scroll-smooth scrollbar-hidden relative" bind:this={sectionContainer}>
-    <MovePageArrow currentSection={currentSection} onClickHandler={handleArrowForwardClick} rotation={rotation}/>
+<div class="flex flex-col min-h-screen z-0 scroll-smooth scrollbar-hidden relative touch-pinch-zoom" bind:this={sectionContainer}>
+    <MovePageArrow onClickHandler={handleArrowForwardClick} rotation={rotation}/>
     <!-- first section, fullpage, landing -->
-    <section class="h-screen flex justify-center items-center translate-y-[-88px] space-x-8 relative z-0 pointer-events-none">
-        <div class="bg-tv aspect-square w-72 blur-[100px] absolute top-1/2 left-1/4 -translate-x-1/2 -translate-y-1/2 -mt-6 ml-6"></div>
-        <img alt="a large computer" src={computer} class="w-[575px] relative z-10"/>
+    <section class="h-screen flex flex-col lg:flex-row justify-center items-center translate-y-[-88px] lg:space-x-8 relative z-0 pointer-events-none">
+        <div class="bg-tv aspect-square w-32 lg:w-72 blur-[100px] absolute top-1/2 left-1/2 lg:left-1/4 -translate-x-1/2 -translate-y-1/2 lg:-mt-6 lg:ml-6"></div>
+        <img alt="a large computer" src={computer} class="w-[300px] lg:w-[575px] relative z-10"/>
         <div class="flex flex-col space-y-4 mt-[-24px]">
             <h1>chriscousinsdev</h1>
-            <div class="flex items-center">
-                <h2 bind:this={typedText} class="h-16">developer.</h2>
-                <span class="w-[1ch] animate-blink text-6xl">|</span>
+            <div class="flex items-end justify-center lg:items-center lg:justify-start">
+                <h2 bind:this={typedText} class="h-8 lg:h-16">developer.</h2>
+                <span class="w-[1ch] animate-blink text-xl lg:text-5xl">|</span>
             </div>
         </div>
     </section>
     <!-- second section, fullpage, about me and my work subsections -->
-    <section class="grid grid-cols-[1.1fr_1fr] grid-rows-2 h-screen pb-10 pt-10">
-        <div class="flex items-center justify-end">
-            <img alt="a block of code" src={bio} class="w-[700px]"/>
-        </div>
-        <div class="flex flex-col justify-center space-y-2">
+    <section class="grid grid-cols-1 lg:grid-cols-[0.9fr_1.1fr] grid-rows-[1fr_1fr_1fr_1fr] lg:grid-rows-2 h-svh lg:h-screen pb-10 pt-6 lg:pt-10 lg:space-x-16">
+        <div class="flex flex-col justify-center space-y-2 order-0 lg:order-1 items-center lg:items-end">
             <h3>about me</h3>
             <h5>some of my skills & interests</h5>
         </div>
-        <div class="flex items-center justify-end">
-            <img alt="a stack of books" src={books} class="w-[700px] pr-[200px] pl-[200px]"/>
+        <div class="flex items-center justify-center lg:justify-start order-1 lg:order-0">
+            <img alt="a block of code" src={bio} class="w-[365px] lg:w-[700px]"/>
         </div>
-        <div class="flex flex-col justify-center space-y-2">
+        <div class="order-2 flex flex-col justify-center items-center lg:items-end space-y-2">
             <h3>my work</h3>
             <h5>current and past projects</h5>
         </div>
+        <div class="order-3 lg:order-2 flex items-center justify-center lg:justify-start">
+            <img alt="a stack of books" src={books} class="w-[200px] lg:w-[300px]"/>
+        </div>
     </section>
     <!-- third section, halfpage, links subsection -->
-    <section class="grid grid-cols-[1.1fr_1fr] h-[50vh]">
-        <div class="grid grid-cols-[1.3fr_1fr] gap-6 gap-y-40 items-center">
+    <section class="grid grid-cols-1 grid-rows-[0.4fr_1fr] lg:grid-rows-1 lg:grid-cols-[0.9fr_1.1fr] h-[50svh] lg:h-[50vh]">
+        <div class="grid grid-cols-[0.3fr_0.4fr] lg:grid-cols-[0.2fr_1fr] gap-6 gap-y-40 items-center order-1 lg:order-0 -mt-10">
             <div class="flex flex-col space-y-4 items-end">
-                <img alt="linkedin icon" src={linkedin} class="w-9 aspect-square"/>
-                <img alt="mail icon" src={email} class="w-9 aspect-square"/>
-                <img alt="github icon" src={github} class="w-9 aspect-square"/>
-                <img alt="cv icon" src={cv} class="w-9 aspect-square"/>
+                <img alt="linkedin icon" src={linkedin} class="h-7 aspect-square"/>
+                <img alt="mail icon" src={email} class="h-7 aspect-square"/>
+                <img alt="github icon" src={github} class="h-7 aspect-square"/>
+                <img alt="cv icon" src={cv} class="h-7 aspect-square"/>
             </div>
-            <div class="flex flex-col space-y-4">
+            <div class="flex flex-col space-y-4 order-0 lg:order-1">
                 <h4><a href="https://www.linkedin.com/in/chriscousinsdev/" target="_blank">linkedin</a></h4>
                 <h4><a href="mailto:chriscousinsdev@gmail.com" target="_blank">email</a></h4>
                 <h4><a href="https://github.com/chriscousinsdev" target="_blank">github</a></h4>
                 <h4><a href="mailto:chriscousinsdev@gmail.com" target="_blank">cv (on request)</a></h4>
             </div>
         </div>
-        <div class="flex flex-col justify-center space-y-2 -mt-3" id="links" bind:this={linksContainer}>
+        <div class="flex flex-col justify-center space-y-2 -mt-3 items-center lg:items-end" id="links" bind:this={linksContainer}>
             <h3>my links</h3>
             <h5>feel free to reach out</h5>
         </div>
